@@ -4,10 +4,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-console.log('1');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
 const users = require('./routes/users');
+const articles = require('./routes/articles');
 const { login, createUser } = require('./controllers/user');
 const NotFoundError = require('./middlewares/errors/not-found-err');
 const { createUserValidation, loginValidation } = require('./middlewares/validation');
@@ -34,13 +34,14 @@ app.post('/signup', createUserValidation, createUser);
 app.use(auth);
 
 app.use('/users', users);
+app.use('/articles', articles);
 app.use('/', (req, res, next) => {
   const error = new NotFoundError('Запрашиваемый ресурс не найден');
   next(error);
 });
 
 // app.use(errorLogger);
-console.log('2');
+
 // обработчик ошибок celebrate
 app.use(errors());
 // централизованный обработчик ошибок
@@ -52,7 +53,7 @@ app.use((err, req, res, next) => {
     return res.status(400).send({ message: `Ошибка валидации:${err.message}` });
   }
   if (statusCode === 500) {
-    message = /*'На сервере произошла ошибка'*/err.message;
+    message = 'На сервере произошла ошибка';
   }
   res
     .status(statusCode).send({ message });
