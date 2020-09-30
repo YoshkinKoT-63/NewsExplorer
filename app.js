@@ -5,15 +5,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const { errors } = require('celebrate');
-const auth = require('./middlewares/auth');
-const users = require('./routes/users');
-const articles = require('./routes/articles');
-const { login, createUser } = require('./controllers/user');
-const NotFoundError = require('./middlewares/errors/not-found-err');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { createUserValidation, loginValidation } = require('./middlewares/validation');
+const routes = require('./routes');
 
-// const errorLogger = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
@@ -31,22 +25,10 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-app.post('/signin', loginValidation, login);
-app.post('/signup', createUserValidation, createUser);
-
-// авторизация
-app.use(auth);
-
-app.use('/users', users);
-app.use('/articles', articles);
-app.use('/', (req, res, next) => {
-  const error = new NotFoundError('Запрашиваемый ресурс не найден');
-  next(error);
-});
+app.use(routes);
 
 app.use(errorLogger);
 
-// обработчик ошибок celebrate
 app.use(errors());
 // централизованный обработчик ошибок
 
@@ -57,7 +39,7 @@ app.use((err, req, res, next) => {
     return res.status(400).send({ message: `Ошибка валидации:${err.message}` });
   }
   if (statusCode === 500) {
-    message = 'На сервере произошла ошибка';
+    message = err.message;
   }
   res
     .status(statusCode).send({ message });

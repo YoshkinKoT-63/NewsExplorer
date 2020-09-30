@@ -34,7 +34,6 @@ module.exports.getUser = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  console.log(req.body);
   const { name, email, password } = req.body;
   if (!passwordValidatorSchema.validate(password)) {
     throw new Unauthorized('пароль должен быть не менее 8 символов, содержать заглавные и строчные буквы, цифры');

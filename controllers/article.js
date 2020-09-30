@@ -19,6 +19,7 @@ module.exports.createArticle = (req, res, next) => {
     .catch(next);
 };
 
+// удаление статьи по id
 module.exports.deleteArticle = (req, res, next) => {
   const { articlesId } = req.params;
   Article.findById(articlesId).select('+owner')

@@ -6,14 +6,14 @@ const Unauthorized = require('../middlewares/errors/unauthorized-err');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    minlength: 2,
-    maxlength: 30,
-    required: true,
+    minlength: [2, 'Минимальная длина поля "name" - 2 символа'],
+    maxlength: [30, 'Максимальная длна поля "name" - 30 символов'],
+    required: [true, 'Поле "name" Должно быть заполнено'],
   },
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required: [true, 'Поле email должно быть заполнено'],
+    unique: [true, 'Данный email уже используется'],
     validate: {
       validator(valid) {
         return validator.isEmail(valid);
