@@ -10,6 +10,7 @@ const users = require('./routes/users');
 const articles = require('./routes/articles');
 const { login, createUser } = require('./controllers/user');
 const NotFoundError = require('./middlewares/errors/not-found-err');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUserValidation, loginValidation } = require('./middlewares/validation');
 
 // const errorLogger = require('./middlewares/logger');
@@ -23,9 +24,12 @@ mongoose.connect('mongodb://localhost:27017/NewsExporerDb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
+  useUnifiedTopology: true,
 });
 
 app.use(bodyParser.json());
+
+app.use(requestLogger);
 
 app.post('/signin', loginValidation, login);
 app.post('/signup', createUserValidation, createUser);
@@ -40,7 +44,7 @@ app.use('/', (req, res, next) => {
   next(error);
 });
 
-// app.use(errorLogger);
+app.use(errorLogger);
 
 // обработчик ошибок celebrate
 app.use(errors());
