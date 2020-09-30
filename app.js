@@ -11,10 +11,10 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
-const { PORT = 3000 } = process.env;
+const { DATABASE, PORT } = require('./config');
 
 // подключаемся к серверу mongo
-mongoose.connect('mongodb://localhost:27017/NewsExporerDb', {
+mongoose.connect(DATABASE, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
