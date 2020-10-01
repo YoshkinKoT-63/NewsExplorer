@@ -1,6 +1,6 @@
 {
   "name": "newsexplorer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Yandex praktikum project work",
   "main": "index.js",
   "scripts": {
