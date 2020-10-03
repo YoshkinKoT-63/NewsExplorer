@@ -3,8 +3,8 @@ const bcrypt = require('bcryptjs');
 const PasswordValidator = require('password-validator');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const NotFoundError = require('../middlewares/errors/not-found-err');
 const Conflict = require('../middlewares/errors/conflict-err');
+const NotFoundError = require('../middlewares/errors/not-found-err');
 const Unauthorized = require('../middlewares/errors/unauthorized-err');
 
 const { NODE_ENV, JWT_SECRET } = require('../config');
@@ -19,10 +19,8 @@ passwordValidatorSchema
   .has().not().spaces();
 
 module.exports.getUser = (req, res, next) => {
-  const { authorization } = req.headers;
-  const token = authorization.replace('Bearer ', '');
-  const { _id } = jwt.decode(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
-  User.findById(_id)
+  const userId = req.user._id;
+  User.findById(userId)
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Нет пользователя с таким id');
@@ -61,7 +59,6 @@ module.exports.login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-
       res.cookie('jwt', token, {
         httpOnly: true,
       });
