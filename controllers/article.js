@@ -21,9 +21,12 @@ module.exports.createArticle = (req, res, next) => {
 
 // удаление статьи по id
 module.exports.deleteArticle = (req, res, next) => {
+  console.log('удаление карточки');
   const { articlesId } = req.params;
+  console.log(articlesId);
   Article.findById(articlesId).select('+owner')
     .then((article) => {
+      console.log(article);
       if (!article) {
         throw new NotFoundError('Нет карточки с таким id');
       } else if (article.owner.toString() !== req.user._id) {

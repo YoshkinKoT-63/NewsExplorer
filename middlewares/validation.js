@@ -28,3 +28,9 @@ module.exports.createArticleValidation = celebrate({
     .regex(/(http:|https:)\/\/((((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))|((www.)?\w+(-\w+)*(\.\w+(-\w+)*)+))(((\/\w+)+(\.|\/)?)|\/)*(.*)?(#[\w\-]+)?$/m), // eslint-disable-line
   }),
 });
+
+module.exports.deleteArticleValidation = celebrate({
+  params: Joi.object().keys({
+    articleId: Joi.string().hex(),
+  }),
+});
