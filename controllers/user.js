@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return, newline-per-chained-call, object-curly-newline */
 const bcrypt = require('bcryptjs');
 const PasswordValidator = require('password-validator');
 const jwt = require('jsonwebtoken');
@@ -13,10 +12,15 @@ const passwordValidatorSchema = new PasswordValidator();
 
 passwordValidatorSchema
   .is().min(8)
-  .has().uppercase()
-  .has().lowercase()
-  .has().digits(1)
-  .has().not().spaces();
+  .has()
+  .uppercase()
+  .has()
+  .lowercase()
+  .has()
+  .digits(1)
+  .has()
+  .not()
+  .spaces();
 
 module.exports.getUser = (req, res, next) => {
   const userId = req.user._id;
@@ -66,4 +70,3 @@ module.exports.login = (req, res, next) => {
     })
     .catch(next);
 };
-/* eslint-disable consistent-return, newline-per-chained-call, object-curly-newline */

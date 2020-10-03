@@ -23,9 +23,9 @@ module.exports.createArticleValidation = celebrate({
     date: Joi.string().min(6).required(),
     source: Joi.string().min(2).required(),
     link: Joi.string().required()
-    .regex(/(http:|https:)\/\/((((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))|((www.)?\w+(-\w+)*(\.\w+(-\w+)*)+))(((\/\w+)+(\.|\/)?)|\/)*(.*)?(#[\w\-]+)?$/m), // eslint-disable-line
+      .regex(/(http:|https:)\/\/((((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))|((www.)?\w+(-\w+)*(\.\w+(-\w+)*)+))(((\/\w+)+(\.|\/)?)|\/)*(.*)?(#[\w-]+)?$/m),
     image: Joi.string().required()
-    .regex(/(http:|https:)\/\/((((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))|((www.)?\w+(-\w+)*(\.\w+(-\w+)*)+))(((\/\w+)+(\.|\/)?)|\/)*(.*)?(#[\w\-]+)?$/m), // eslint-disable-line
+      .regex(/(http:|https:)\/\/((((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))|((www.)?\w+(-\w+)*(\.\w+(-\w+)*)+))(((\/\w+)+(\.|\/)?)|\/)*(.*)?(#[\w-]+)?$/m),
   }),
 });
 
