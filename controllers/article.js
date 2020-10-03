@@ -32,7 +32,7 @@ module.exports.deleteArticle = (req, res, next) => {
       } else if (article.owner.toString() !== req.user._id) {
         throw new ForbiddenErr('Невозможно удалить чужую карточку');
       } else {
-        return Article.findByIdAndRemove(articleId);
+        return Article.deleteOne(article);
       }
     })
     .then(() => {
