@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 const Article = require('../models/article');
 const NotFoundError = require('../middlewares/errors/not-found-err');
 const ForbiddenErr = require('../middlewares/errors/rorbidden-err');
@@ -13,26 +12,27 @@ module.exports.getArticles = (req, res, next) => {
 // создаёт статью с переданными в теле
 // keyword, title, text, date, source, link и image
 module.exports.createArticle = (req, res, next) => {
-  const { keyword, title, text, date, source, link, image } = req.body;
-  Article.create({ keyword, title, text, date, source, link, image, owner: req.user._id })
+  const {
+    keyword, title, text, date, source, link, image,
+  } = req.body;
+  Article.create({
+    keyword, title, text, date, source, link, image, owner: req.user._id,
+  })
     .then((article) => res.send({ data: article }))
     .catch(next);
 };
 
 // удаление статьи по id
 module.exports.deleteArticle = (req, res, next) => {
-  console.log('удаление карточки');
-  const { articlesId } = req.params;
-  console.log(articlesId);
-  Article.findById(articlesId).select('+owner')
+  const { articleId } = req.params;
+  Article.findById(articleId).select('+owner')
     .then((article) => {
-      console.log(article);
       if (!article) {
         throw new NotFoundError('Нет карточки с таким id');
       } else if (article.owner.toString() !== req.user._id) {
         throw new ForbiddenErr('Невозможно удалить чужую карточку');
       } else {
-        return Article.findByIdAndRemove(articlesId);
+        return Article.findByIdAndRemove(articleId);
       }
     })
     .then(() => {
@@ -40,4 +40,3 @@ module.exports.deleteArticle = (req, res, next) => {
     })
     .catch(next);
 };
-/* eslint-enable object-curly-newline */

@@ -31,6 +31,6 @@ module.exports.createArticleValidation = celebrate({
 
 module.exports.deleteArticleValidation = celebrate({
   params: Joi.object().keys({
-    articleId: Joi.string().hex(),
+    articleId: Joi.string().hex().length(24),
   }),
 });

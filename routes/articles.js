@@ -4,6 +4,6 @@ const { createArticleValidation, deleteArticleValidation } = require('../middlew
 
 articles.get('/', getArticles);
 articles.post('/', createArticleValidation, createArticle);
-articles.delete('/:articlesId', deleteArticleValidation, deleteArticle);
+articles.delete('/:articleId', deleteArticleValidation, deleteArticle);
 
 module.exports = articles;
