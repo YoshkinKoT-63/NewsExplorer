@@ -28,9 +28,9 @@ module.exports.deleteArticle = (req, res, next) => {
   Article.findById(articleId).select('+owner')
     .then((article) => {
       if (!article) {
-        throw new NotFoundError('Нет карточки с таким id');
+        throw new NotFoundError('Нет статьи с таким id');
       } else if (article.owner.toString() !== req.user._id) {
-        throw new ForbiddenErr('Невозможно удалить чужую карточку');
+        throw new ForbiddenErr('Невозможно удалить чужую статью');
       } else {
         return Article.deleteOne(article);
       }
