@@ -7,6 +7,7 @@ const helmet = require('helmet');
 
 const routes = require('./routes');
 
+const cors = require('./middlewares/cors');
 const limiter = require('./middlewares/rate-limiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { errorsHandler } = require('./middlewares/errors-handler');
@@ -21,6 +22,8 @@ mongoose.connect(DATABASE, {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+
+app.use(cors);
 
 app.use(bodyParser.json());
 
