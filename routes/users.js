@@ -1,9 +1,15 @@
 const users = require('express').Router();
-const { getUsers, getUser } = require('../controllers/user');
-const { userIdValidation } = require('../middlewares/validation');
+const { getUser, login, createUser } = require('../controllers/user');
+const auth = require('../middlewares/auth');
+const { createUserValidation, loginValidation } = require('../middlewares/validation');
 
-users.get('/', getUsers);
+users.post('/signin', loginValidation, login);
+users.post('/signup', createUserValidation, createUser);
 
-users.get('/:id', userIdValidation, getUser);
+// авторизация
+users.use(auth);
+
+// получить данные пользователя
+users.get('/users/me', getUser);
 
 module.exports = users;
